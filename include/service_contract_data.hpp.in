@@ -1,0 +1,5 @@
+#pragma once
+namespace audio::service {
+inline constexpr const char* schemaData = R"A18SCHEMA(@MW_SERVICE_SCHEMA@)A18SCHEMA";
+inline constexpr const char* examplesData = R"A18EXAMPLE(@MW_SERVICE_EXAMPLES@)A18EXAMPLE";
+}

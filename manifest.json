@@ -1,0 +1,413 @@
+{
+  "runtime": "native-v1",
+  "name": "Audio média et sons système",
+  "description": "Mixeur audio Windows, applications, microphones et commandes média dans un companion accessible.",
+  "version": "0.1.0",
+  "deviceSettingsVersion": "1",
+  "native": {
+    "companion": {
+      "runtime": "process-v2",
+      "entries": {
+        "windows-x86_64": "native/out/windows-x86_64/companion.exe"
+      }
+    }
+  },
+  "settings": [
+    {
+      "id": "general",
+      "type": "section",
+      "label": "Mon audio"
+    },
+    {
+      "id": "enabled",
+      "type": "boolean",
+      "label": "Activer les commandes audio",
+      "default": true,
+      "scope": "device",
+      "parent": "general"
+    },
+    {
+      "id": "showPanel",
+      "type": "boolean",
+      "label": "Afficher le mixeur",
+      "default": false,
+      "scope": "device",
+      "parent": "general",
+      "description": "Ouvre le panneau de cet add-on ; ne remplace pas le flyout Windows."
+    },
+    {
+      "id": "trayIcon",
+      "type": "boolean",
+      "label": "Icône dans la zone de notification",
+      "default": true,
+      "scope": "device",
+      "parent": "general"
+    },
+    {
+      "id": "volumeStep",
+      "type": "range",
+      "label": "Pas de la molette (%)",
+      "default": 2,
+      "scope": "device",
+      "parent": "general",
+      "min": 1,
+      "max": 10,
+      "step": 1
+    },
+    {
+      "id": "allowMicrophoneChanges",
+      "type": "boolean",
+      "label": "Autoriser le volume et le mute microphone",
+      "default": false,
+      "scope": "device",
+      "parent": "general",
+      "description": "La lecture de l’activité ne capture aucun son. Les changements demandent cette option."
+    },
+    {
+      "id": "showInactive",
+      "type": "boolean",
+      "label": "Montrer aussi les applications silencieuses",
+      "default": true,
+      "scope": "device",
+      "parent": "general"
+    },
+    {
+      "id": "favorites",
+      "type": "section",
+      "label": "Périphériques préférés"
+    },
+    {
+      "id": "preferredOutput",
+      "type": "string",
+      "label": "Sortie préférée",
+      "default": "",
+      "scope": "device",
+      "parent": "favorites",
+      "description": "Nom affiché du périphérique. Choisit la cible du mixeur, sans changer la sortie Windows."
+    },
+    {
+      "id": "preferredMicrophone",
+      "type": "string",
+      "label": "Microphone préféré",
+      "default": "",
+      "scope": "device",
+      "parent": "favorites",
+      "description": "Nom affiché. Ne change pas le microphone Windows par défaut."
+    },
+    {
+      "id": "presentation",
+      "type": "section",
+      "label": "Présentation du panneau"
+    },
+    {
+      "id": "backgroundColor",
+      "type": "color",
+      "label": "Fond",
+      "default": "#15202BFF",
+      "scope": "device",
+      "parent": "presentation",
+      "alpha": true
+    },
+    {
+      "id": "textColor",
+      "type": "color",
+      "label": "Texte",
+      "default": "#F4F7FAFF",
+      "scope": "device",
+      "parent": "presentation",
+      "alpha": true
+    },
+    {
+      "id": "accentColor",
+      "type": "color",
+      "label": "Accent",
+      "default": "#6DD6C5FF",
+      "scope": "device",
+      "parent": "presentation",
+      "alpha": true
+    },
+    {
+      "id": "panelWidth",
+      "type": "range",
+      "label": "Largeur (unités Windows)",
+      "default": 560,
+      "scope": "device",
+      "parent": "presentation",
+      "min": 480,
+      "max": 900,
+      "step": 10
+    },
+    {
+      "id": "textSize",
+      "type": "range",
+      "label": "Taille du texte",
+      "default": 14,
+      "scope": "device",
+      "parent": "presentation",
+      "min": 11,
+      "max": 22,
+      "step": 1
+    },
+    {
+      "id": "position",
+      "type": "select",
+      "label": "Emplacement",
+      "default": "bottomRight",
+      "scope": "device",
+      "parent": "presentation",
+      "options": [
+        {
+          "value": "bottomRight",
+          "label": "En bas à droite"
+        },
+        {
+          "value": "bottomLeft",
+          "label": "En bas à gauche"
+        },
+        {
+          "value": "topRight",
+          "label": "En haut à droite"
+        },
+        {
+          "value": "topLeft",
+          "label": "En haut à gauche"
+        },
+        {
+          "value": "center",
+          "label": "Au centre"
+        }
+      ]
+    },
+    {
+      "id": "monitor",
+      "type": "select",
+      "label": "Écran",
+      "default": "primary",
+      "scope": "device",
+      "parent": "presentation",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Écran principal"
+        },
+        {
+          "value": "pointer",
+          "label": "Écran du pointeur"
+        }
+      ]
+    },
+    {
+      "id": "margin",
+      "type": "range",
+      "label": "Marge du bord",
+      "default": 24,
+      "scope": "device",
+      "parent": "presentation",
+      "min": 0,
+      "max": 120,
+      "step": 1
+    },
+    {
+      "id": "topmost",
+      "type": "boolean",
+      "label": "Garder le panneau au-dessus",
+      "default": false,
+      "scope": "device",
+      "parent": "presentation"
+    },
+    {
+      "id": "showMedia",
+      "type": "boolean",
+      "label": "Afficher la piste et ses commandes",
+      "default": true,
+      "scope": "device",
+      "parent": "presentation"
+    },
+    {
+      "id": "showMicrophone",
+      "type": "boolean",
+      "label": "Afficher l’activité microphone",
+      "default": true,
+      "scope": "device",
+      "parent": "presentation"
+    },
+    {
+      "id": "refreshMs",
+      "type": "range",
+      "label": "Actualisation (ms)",
+      "default": 1000,
+      "scope": "device",
+      "parent": "presentation",
+      "min": 500,
+      "max": 3000,
+      "step": 250
+    },
+    {
+      "id": "shortcuts",
+      "type": "section",
+      "label": "Raccourcis facultatifs"
+    },
+    {
+      "id": "hotkeys",
+      "type": "boolean",
+      "label": "Activer les raccourcis globaux",
+      "default": false,
+      "scope": "device",
+      "parent": "shortcuts",
+      "description": "Ctrl + Alt (ou Windows + Alt) : haut / bas = volume ; M = mute ; A = panneau. Les conflits sont signalés."
+    },
+    {
+      "id": "hotkeyModifier",
+      "type": "select",
+      "label": "Touches modificatrices",
+      "default": "ctrlAlt",
+      "scope": "device",
+      "parent": "shortcuts",
+      "options": [
+        {
+          "value": "ctrlAlt",
+          "label": "Ctrl + Alt"
+        },
+        {
+          "value": "winAlt",
+          "label": "Windows + Alt"
+        }
+      ],
+      "showIf": {
+        "setting": "hotkeys",
+        "equals": true
+      }
+    },
+    {
+      "id": "rules",
+      "type": "section",
+      "label": "Règle de volume facultative"
+    },
+    {
+      "id": "ruleEnabled",
+      "type": "boolean",
+      "label": "Réduire une application en arrière-plan",
+      "default": false,
+      "scope": "device",
+      "parent": "rules",
+      "description": "Restaure le volume initial au retour au premier plan ou à l’arrêt normal, sauf modification extérieure observée. Ne restaure pas après un arrêt forcé du processus."
+    },
+    {
+      "id": "ruleApplication",
+      "type": "string",
+      "label": "Nom du programme (ex. jeu.exe)",
+      "default": "",
+      "scope": "device",
+      "parent": "rules",
+      "showIf": {
+        "setting": "ruleEnabled",
+        "equals": true
+      }
+    },
+    {
+      "id": "backgroundLimit",
+      "type": "range",
+      "label": "Volume maximal en arrière-plan (%)",
+      "default": 30,
+      "scope": "device",
+      "parent": "rules",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "showIf": {
+        "setting": "ruleEnabled",
+        "equals": true
+      }
+    },
+    {
+      "id": "sounds",
+      "type": "section",
+      "label": "Mes sons facultatifs"
+    },
+    {
+      "id": "soundsEnabled",
+      "type": "boolean",
+      "label": "Activer les sons de ce companion",
+      "default": false,
+      "description": "Lit vos fichiers WAV lors des événements choisis. Ne modifie pas le thème sonore Windows.",
+      "scope": "device",
+      "parent": "sounds"
+    },
+    {
+      "id": "deviceSound",
+      "type": "string",
+      "label": "Connexion d’un périphérique audio — fichier WAV",
+      "default": "",
+      "scope": "device",
+      "parent": "sounds",
+      "showIf": {
+        "setting": "soundsEnabled",
+        "equals": true
+      },
+      "description": "Chemin local Windows d’un WAV, 8 MiB maximum. Vide = aucun son pour cet événement."
+    },
+    {
+      "id": "powerSound",
+      "type": "string",
+      "label": "Branchement / débranchement secteur — fichier WAV",
+      "default": "",
+      "scope": "device",
+      "parent": "sounds",
+      "showIf": {
+        "setting": "soundsEnabled",
+        "equals": true
+      },
+      "description": "Chemin local Windows d’un WAV, 8 MiB maximum. Vide = aucun son pour cet événement."
+    },
+    {
+      "id": "batterySound",
+      "type": "string",
+      "label": "Batterie faible — fichier WAV",
+      "default": "",
+      "scope": "device",
+      "parent": "sounds",
+      "showIf": {
+        "setting": "soundsEnabled",
+        "equals": true
+      },
+      "description": "Chemin local Windows d’un WAV, 8 MiB maximum. Vide = aucun son pour cet événement."
+    },
+    {
+      "id": "interactionSound",
+      "type": "string",
+      "label": "Commande de mute — fichier WAV",
+      "default": "",
+      "scope": "device",
+      "parent": "sounds",
+      "showIf": {
+        "setting": "soundsEnabled",
+        "equals": true
+      },
+      "description": "Chemin local Windows d’un WAV, 8 MiB maximum. Vide = aucun son pour cet événement."
+    },
+    {
+      "id": "lowBattery",
+      "type": "range",
+      "label": "Seuil batterie faible (%)",
+      "default": 20,
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "scope": "device",
+      "parent": "sounds",
+      "showIf": {
+        "setting": "soundsEnabled",
+        "equals": true
+      }
+    }
+  ],
+  "services": {
+    "provides": {
+      "audio": {
+        "contract": "a18/audio-system",
+        "version": 1
+      }
+    },
+    "requires": {}
+  }
+}
